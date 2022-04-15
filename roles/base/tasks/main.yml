@@ -16,12 +16,6 @@
     state: directory
     mode: 0750
 
-- name: git pull dotfiles
-  ansible.builtin.git:
-    repo: 'https://github.com/djdanielsson/dotfiles.git'
-    dest: "{{ home_dir }}workspace/dotfiles"
-    update: no
-
 - name: create .local/share folder
   ansible.builtin.file:
     path: "{{ home_dir }}.local/share/"
@@ -64,15 +58,9 @@
     path: "{{ home_dir }}.vimrc"
   register: vimrc
 
-- name: making sure .vimrc is symlink
-  ansible.builtin.file:
-    path: "{{ home_dir }}.vimrc"
-    state: absent
-  when: vimrc.stat.islnk is defined and vimrc.stat.islnk == False
-
 - name: creating symlink .vimrc
-  ansible.builtin.file:
-    src: "{{ home_dir }}workspace/dotfiles/.vimrc"
+  ansible.builtin.copy:
+    src: "files/.vimrc"
     dest: "{{ home_dir }}.vimrc"
     state: link
 
@@ -87,15 +75,9 @@
     path: "{{ home_dir }}.bashrc"
   register: bashrc
 
-- name: making sure .bashrc is symlink
-  ansible.builtin.file:
-    path: "{{ home_dir }}.bashrc"
-    state: absent
-  when: bashrc.stat.islnk is defined and bashrc.stat.islnk == False
-
 - name: creating symlink .bashrc
   ansible.builtin.file:
-    src: "{{ home_dir }}workspace/dotfiles/.bashrc"
+    src: "files/.bashrc"
     dest: "{{ home_dir }}.bashrc"
     state: link
 
@@ -110,15 +92,9 @@
     state: directory
   when: dunstrc.stat.exists == False
 
-- name: making sure dunstrc is symlink
-  ansible.builtin.file:
-    path: "{{ home_dir }}.config/dunst/dunstrc"
-    state: absent
-  when: dunstrc.stat.islnk is defined and dunstrc.stat.islnk == False
-
 - name: creating symlink dunst
   ansible.builtin.file:
-    src: "{{ home_dir }}workspace/dotfiles/dunstrc"
+    src: "files/dunstrc"
     dest: "{{ home_dir }}.config/dunst/dunstrc"
     state: link
 
@@ -127,15 +103,9 @@
     path: "{{ home_dir }}.zshrc"
   register: zshrc
 
-- name: making sure .zshrc is symlink
-  ansible.builtin.file:
-    path: "{{ home_dir }}.zshrc"
-    state: absent
-  when: zshrc.stat.islnk is defined and zshrc.stat.islnk == False
-
 - name: creating symlink .zsh
   ansible.builtin.file:
-    src: "{{ home_dir }}workspace/dotfiles/.zshrc"
+    src: "files/.zshrc"
     dest: "{{ home_dir }}.zshrc"
     state: link
 
