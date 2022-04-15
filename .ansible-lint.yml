@@ -1,21 +1,21 @@
 ---
-## Ansible Linter rules ##
+## Ansible Linter rules
 
-# Exclude paths from linter #
+# Exclude paths from linter
 exclude_paths:
   - '.github/*'
   - '.ansible-lint.yml'
 
-# Make output parsable #
+# Make output parsable
 parseable: true
 
-# Set output to quiet #
+# Set output to quiet
 quiet: true
 
-# Path to rules dir #
+# Path to rules dir
 #rulesdir:
 
-# Tags to skip #
+# Tags to skip
 skip_list:
   - 'empty-string-compare' # Allow compare to empty string
   - '204' # Allow string length greater than 160 chars
@@ -27,10 +27,10 @@ skip_list:
   - 'package-latest' # Allow newest package version
   - 'yaml' # skip yaml and check that with yaml lint itself
 
-# Tags to follow #
+# Tags to follow
 #tags:
 
-# Use rules #
+# Use rules
 use_default_rules: true
 enable_list:
   - fqcn-builtins  # opt-in
@@ -42,10 +42,10 @@ verbosity: 1
 # List of additional kind:pattern to be added at the top of the default
 # match list, first match determines the file kind.
 kinds:
-  #- playbook: "**/ansible/*.{yml,yaml}"
-  #- galaxy: "**/folder/galaxy.yml"
-  #- tasks: "**/tasks/*.yml"
-  #- vars: "**/vars/*.yml"
-  #- meta: "**/meta/main.yml"
-  #- yaml: "**/*.yml"
+  - playbook: "**/playbooks/*.{yml,yaml}"
+  - galaxy: "**/folder/galaxy.yml"
+  - tasks: "**/tasks/*.yml"
+  - vars: "**/vars/*.yml"
+  - meta: "**/meta/main.yml"
+  - yaml: "**/*.yml"
 ...
