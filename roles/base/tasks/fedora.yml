@@ -1,0 +1,40 @@
+---
+- name: install dnf-plugins-core required for rpmfusion
+  become: yes
+  package:
+    name: dnf-plugins-core
+    state: latest
+
+- name: install rpmfusion free
+  become: yes
+  dnf:
+    name: "http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
+    state: present
+
+- name: install rpmfusion non-free
+  become: yes
+  dnf:
+    name: 'http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm'
+    state: present
+
+#i3blocks
+#i3-ipc 
+#pkajaba
+#yarslav
+
+#- name: Add yaroslav i3desktop repository
+#  get_url:
+#    url: https://copr.fedorainfracloud.org/coprs/yaroslav/i3desktop/repo/fedora-{{ ansible_distribution_major_version }}/yaroslav-i3desktop-fedora-{{ ansible_distribution_major_version }}.repo
+#    dest: /etc/yum.repos.d/yaroslav-i3desktop-fedora-{{ ansible_distribution_major_version }}.repo
+#    mode: 0644
+#
+#- name: install the latest version of i3lock
+#  package:
+#    name: i3lock
+#    state: latest
+#
+#- name: install the latest version of rofi
+#  package:
+#    name: rofi
+#    state: latest
+...
