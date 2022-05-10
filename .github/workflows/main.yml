@@ -6,9 +6,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Important: This sets up your GITHUB_WORKSPACE environment variable
-      - uses: actions/checkout@v2
-
+      - name: Clone Repo
+        uses: actions/checkout@v2
       - name: Run ansible-lint
         uses: ansible-community/ansible-lint-action@v6
         with:
