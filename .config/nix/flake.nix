@@ -64,6 +64,8 @@
           "bitwarden" = 1352778147;
         };
 #        onActivation.cleanup = "zap";
+        onActivation.autoUpdate = true;
+        onActivation.upgrade = true;
       };
 
       fonts.packages = [
