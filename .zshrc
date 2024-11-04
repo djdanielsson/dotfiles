@@ -111,6 +111,8 @@ alias ll="eza -l"
 alias lt="eza -a --tree --level=1"
 source <(fzf --zsh)
 
+export EDITOR=vim
+
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/ddaniels/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
