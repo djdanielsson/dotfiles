@@ -77,41 +77,36 @@
     enable = true;
     onActivation = {
       autoUpdate = true;
+      cleanup = zap;
       upgrade = true;
     };
-    # Only keep packages here that aren't a good fit for Nixpkgs
     brews = [ "qemu" ];
-    # Your full list of GUI applications
     casks = [
-      "alacritty"
       "battery"
       "ferdium"
       "gimp"
-      "hashicorp-vagrant"
       "hiddenbar"
       "hoppscotch"
-      "insomnia"
       "libreoffice"
       "logseq"
       "lulu"
       "obs"
-      "openscad"
       "openshot-video-editor"
       "podman-desktop"
-      "slack"
       "utm"
       "vial"
       "visual-studio-code"
       "vlc"
       "vscodium"
       "warp"
-      "zed"
     ];
     masApps = {
       "AdBlock" = 1402042596;
-      "Xcode" = 497799835;
-      "VMware Remote Console" = 1230249825;
       "Bitwarden" = 1352778147;
+      "Slack" = 803453959;
+      "VMware Remote Console" = 1230249825;
+      "Windows App" = 1295203466;
+      "Xcode" = 497799835;
     };
   };
 
