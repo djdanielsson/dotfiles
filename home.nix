@@ -82,21 +82,6 @@
     syntaxHighlighting.enable = true;
   };
 
-  # Grant Safari camera and microphone permissions for Google Meet
-  home.activation.safariPermissions = ''
-    # The target preference file
-    PREF_FILE="$HOME/Library/Safari/PerSitePreferences.plist"
-
-    # The website key
-    KEY="com.google.meet"
-
-    # The permission dictionary (1 = Allow)
-    VALUE='{ Camera = { Permission = 1; }; Microphone = { Permission = 1; }; }'
-
-    # Write the setting using the defaults command
-    defaults write "$PREF_FILE" "$KEY" -dict "$VALUE"
-  '';
-
   # Activation script to set wallpaper
   home.activation.setWallpaper = ''
     wallpaper_path="''${/Users/ddaniels/Pictures/Wallpapers/background-dark.png}"
