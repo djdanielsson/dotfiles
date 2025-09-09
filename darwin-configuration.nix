@@ -1,38 +1,52 @@
+# ~/.config/nix/darwin-configuration.nix
 { config, pkgs, self, ... }:
 
 {
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages = [
-    pkgs.mkalias
-  ];
+  environment.systemPackages = [ pkgs.mkalias ];
 
-  fonts.packages = [
-    pkgs.nerd-fonts.jetbrains-mono
-  ];
+  fonts.packages = [ pkgs.nerd-fonts.jetbrains-mono ];
 
-  system.activationScripts.applications.text =
-    let
-      userPackages = config.home-manager.users.ddaniels.home.packages;
-      allPackages = config.environment.systemPackages ++ userPackages;
-      guiApps = pkgs.buildEnv {
-        name = "gui-applications";
-        paths = allPackages;
-        pathsToLink = "/Applications";
-      };
-    in
-    pkgs.lib.mkForce ''
-      echo "Linking GUI applications into /Applications..." >&2
-      rm -rf "/Applications/Nix Apps"
-      mkdir -p "/Applications/Nix Apps"
-      find "${guiApps}/Applications" -maxdepth 1 -type l -exec readlink '{}' + | while read -r src; do
-        app_name=$(basename "$src")
-        echo "Creating alias for $app_name" >&2
-        ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
-      done
-    '';
+  system.activationScripts.applications = {
+    text =
+      let
+        # Combine system and user packages that might have GUI apps
+        allPackages = config.environment.systemPackages ++ config.home-manager.users.ddaniels.home.packages;
 
-  # Enable Touch ID for sudo
+        # Create a derivation that holds all the apps
+        guiAppsEnv = pkgs.buildEnv {
+          name = "gui-applications";
+          paths = allPackages;
+          pathsToLink = "/Applications";
+        };
+
+        # Use a helper to write a clean, standalone shell script
+        linkScript = pkgs.writeShellScriptBin "link-apps" ''
+          set -e
+          echo "Linking GUI applications into /Applications..." >&2
+
+          # Ensure the target directory exists and is clean
+          rm -rf "/Applications/Nix Apps"
+          mkdir -p "/Applications/Nix Apps"
+
+          # The path to the app environment is passed as the first argument
+          GUI_APPS_DIR="$1"
+
+          # Find all .app bundles and create aliases
+          find "$GUI_APPS_DIR/Applications" -maxdepth 1 -type l -exec readlink '{}' + | while read -r src; do
+            app_name=$(basename "$src")
+            echo "Creating alias for $app_name" >&2
+            ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
+          done
+        '';
+      in
+      # The final activation script is now a simple, clean call to our generated script
+      pkgs.lib.mkForce ''
+        ${linkScript}/bin/link-apps ${guiAppsEnv}
+      '';
+  };
+
   security.pam.services.sudo_local.touchIdAuth = true;
   system.primaryUser = "ddaniels";
 
@@ -68,7 +82,6 @@
     home = "/Users/ddaniels";
   };
 
- # Add this line to automatically back up conflicting files 
   home-manager.backupFileExtension = "backup";
 
   home-manager.users.ddaniels = import ./home.nix;
@@ -78,40 +91,37 @@
     onActivation = {
       autoUpdate = true;
       upgrade = true;
+      cleanup = "zap";
     };
-    # Only keep packages here that aren't a good fit for Nixpkgs
-    brews = [ "qemu" ];
-    # Your full list of GUI applications
+    brews = [
+      "qemu"
+    ];
     casks = [
-      "alacritty"
       "battery"
       "ferdium"
       "gimp"
-      "hashicorp-vagrant"
       "hiddenbar"
       "hoppscotch"
-      "insomnia"
       "libreoffice"
       "logseq"
       "lulu"
       "obs"
-      "openscad"
       "openshot-video-editor"
       "podman-desktop"
-      "slack"
       "utm"
       "vial"
       "visual-studio-code"
       "vlc"
       "vscodium"
       "warp"
-      "zed"
     ];
     masApps = {
       "AdBlock" = 1402042596;
-      "Xcode" = 497799835;
-      "VMware Remote Console" = 1230249825;
       "Bitwarden" = 1352778147;
+      "Slack" = 803453959;
+      "VMware Remote Console" = 1230249825;
+      "Windows App" = 1295203466;
+      "Xcode" = 497799835;
     };
   };
 
