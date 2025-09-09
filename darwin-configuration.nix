@@ -90,12 +90,17 @@
     enable = true;
     onActivation = {
       autoUpdate = true;
+      cleanup = "zap";
       upgrade = true;
       cleanup = "zap";
     };
+<<<<<<< HEAD
     brews = [
       "qemu"
     ];
+=======
+    brews = [ "qemu" ];
+>>>>>>> d8b05bec6c829700426aaf7df67afc5dd7bcf7ee
     casks = [
       "battery"
       "ferdium"
