@@ -48,11 +48,12 @@
   };
 
   security.pam.services.sudo_local.touchIdAuth = true;
+  system.defaults.dock.minimize-to-application = true;
   system.primaryUser = "ddaniels";
 
   system.defaults = {
     dock.persistent-apps = [
-      "/System/Applications/Launchpad.app"
+      "/System/Applications/Apps.app"
       "/Applications/Safari.app"
       "/System/Applications/Mail.app"
       "/System/Applications/Calendar.app"
@@ -92,15 +93,10 @@
       autoUpdate = true;
       cleanup = "zap";
       upgrade = true;
-      cleanup = "zap";
     };
-<<<<<<< HEAD
     brews = [
       "qemu"
     ];
-=======
-    brews = [ "qemu" ];
->>>>>>> d8b05bec6c829700426aaf7df67afc5dd7bcf7ee
     casks = [
       "battery"
       "ferdium"

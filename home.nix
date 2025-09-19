@@ -15,6 +15,7 @@
     pkgs.kubectl
     pkgs.kubernetes-helm
     pkgs.kubevirt
+    pkgs.kustomize
     pkgs.mas
     pkgs.neovim
     pkgs.nodejs
