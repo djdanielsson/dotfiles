@@ -1,3 +1,10 @@
 *.un~
 *.retry
 
+.env
+.env.*
+*.pem
+*.key
+credentials.json
+.env.local
+.env.production
