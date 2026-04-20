@@ -1,4 +1,6 @@
 name: Ansible Lint # feel free to pick your own name
+permissions:
+  contents: read
 on: [push, pull_request]
 
 jobs:
@@ -7,7 +9,7 @@ jobs:
 
     steps:
       # Important: This sets up your GITHUB_WORKSPACE environment variable
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2
 
       - name: Run ansible-lint
         uses: ansible-community/ansible-lint-action@v6
